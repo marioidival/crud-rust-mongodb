@@ -1,0 +1,13 @@
+[package]
+name = "crud-warp-mongodb"
+version = "0.1.0"
+authors = ["Mario idival <marioidival@gmail.com>"]
+
+[dependencies]
+warp = "0.1.3"
+pretty_env_logger = "0.2.4"
+log = "0.4.5"
+serde = "1.0.79"
+serde_derive = "1.0.79"
+bson = "0.12.2"
+mongodb = "0.3.10"

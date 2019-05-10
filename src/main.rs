@@ -8,9 +8,9 @@ extern crate mongodb;
 
 // TODO: Add bson::oid::ObjectId
 
+use mongodb::{db::ThreadedDatabase, Client, ThreadedClient};
 use std::env;
 use warp::{http::StatusCode, Filter};
-use mongodb::{Client, ThreadedClient, db::ThreadedDatabase};
 
 #[derive(Debug, Deserialize, Serialize)]
 struct Contact {
@@ -31,7 +31,7 @@ fn list_contact(mdb: Client) -> Result<impl warp::Reply, warp::Rejection> {
         }
     }
 
-    if false {
+    if true == false {
         return Err(warp::reject::bad_request());
     }
     Ok(StatusCode::OK)
@@ -45,7 +45,11 @@ fn create_contact(_create: Contact, _mdb: Client) -> Result<impl warp::Reply, wa
     Ok(StatusCode::OK)
 }
 
-fn update_contact(_id: u64, _updated: Contact, _mdb: Client) -> Result<impl warp::Reply, warp::Rejection> {
+fn update_contact(
+    _id: u64,
+    _updated: Contact,
+    _mdb: Client,
+) -> Result<impl warp::Reply, warp::Rejection> {
     // logic to update contact
     if false {
         return Err(warp::reject::bad_request());
@@ -124,10 +128,7 @@ fn main() {
         // pass values of filters to a "view/controller/handler".
         .and_then(delete_contact);
 
-    let api = list
-        .or(create)
-        .or(update)
-        .or(delete);
+    let api = list.or(create).or(update).or(delete);
     let routes = api.with(warp::log("contacts"));
 
     warp::serve(routes).run(([127, 0, 0, 1], 3030));
